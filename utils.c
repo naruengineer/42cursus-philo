@@ -6,7 +6,7 @@
 /*   By: nando <nando@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 07:16:06 by nando             #+#    #+#             */
-/*   Updated: 2025/07/05 07:16:26 by nando            ###   ########.fr       */
+/*   Updated: 2025/07/24 13:29:52 by nando            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,12 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (result * sign);
+};
+
+long	now_ms(void)
+{
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 };
