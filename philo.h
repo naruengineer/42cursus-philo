@@ -6,7 +6,7 @@
 /*   By: nando <nando@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 07:12:38 by nando             #+#    #+#             */
-/*   Updated: 2025/07/24 14:13:21 by nando            ###   ########.fr       */
+/*   Updated: 2025/07/30 15:56:17 by nando            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/time.h>
 # include <unistd.h>
 
 typedef struct s_philo
@@ -26,20 +27,23 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_limit;
-	int				time_to_die;
 	int				*eat_count;
 	pthread_mutex_t	*forks;
 	long			*last_meal_times;
 	int				*stop_flag;
+	long			start_time;
 }					t_philo;
 
 int					ft_atoi(const char *nptr);
 long				now_ms(void);
-void				log_death(int id);
-void				log_actions(int id, char *log);
+// void				log_death(int id, t_philo *ph);
+void				log_death(int id, t_philo *p, long detect_ts);
+void				log_actions(int id, char *msg, t_philo *philo);
+void				log_complete(int eat_limit);
 void				monitoring(t_philo *p);
 void				*philosopher(void *arg);
 void				cleaning(t_philo *philo, pthread_t *threads,
 						pthread_mutex_t *forks);
+int					create_thread(t_philo *p, pthread_t *threads);
 
 #endif
