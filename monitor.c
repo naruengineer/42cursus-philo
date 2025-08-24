@@ -6,7 +6,7 @@
 /*   By: nando <nando@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:00:37 by nando             #+#    #+#             */
-/*   Updated: 2025/07/30 19:20:29 by nando            ###   ########.fr       */
+/*   Updated: 2025/08/24 16:35:26 by nando            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,18 @@ void	monitoring(t_philo *p)
 		while (i < p->philo_count)
 		{
 			detect_ts = now_ms();
-			// 飢死判定
 			if (detect_ts - p->last_meal_times[i] > p->time_to_die)
 			{
 				log_death(i, p, detect_ts);
 				*(p->stop_flag) = 0;
 				return ;
 			}
-			// 食事回数判定
 			if (p->eat_limit > 0 && p->eat_count[i] >= p->eat_limit)
 				done++;
 			i++;
 		}
-		// 全員達成で終了
 		if (p->eat_limit > 0 && done == p->philo_count)
 		{
-			//log_complete(p->eat_limit);
 			*(p->stop_flag) = 0;
 			return ;
 		}
