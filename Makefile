@@ -6,7 +6,7 @@ CPPFLAGS   := -I./includes
 
 CFLAGS     := -Wall -Wextra -Werror
 
-SRCS       := main.c monitor.c philo.c log.c utils.c
+SRCS       := main.c monitor.c philo.c log.c utils.c cleancreate.c
 
 OBJDIR     := object
 OBJS       := $(SRCS:%.c=$(OBJDIR)/%.o)
