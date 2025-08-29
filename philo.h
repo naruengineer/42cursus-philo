@@ -6,7 +6,7 @@
 /*   By: nando <nando@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 07:12:38 by nando             #+#    #+#             */
-/*   Updated: 2025/08/25 21:14:43 by nando            ###   ########.fr       */
+/*   Updated: 2025/08/29 12:45:51 by nando            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_philo
 	long			*last_meal_times;
 	int				*stop_flag;
 	long			start_time;
+	pthread_mutex_t	*state_mtx;
 }					t_philo;
 
 typedef struct s_ctx
@@ -49,10 +50,12 @@ typedef struct s_ctx
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_limit;
+	pthread_mutex_t	*state_mtx;
 }					t_ctx;
 
 int					ft_atoi(const char *nptr);
 long				now_ms(void);
+int					is_running(t_philo *p);
 void				log_death(int id, t_philo *p, long detect_ts);
 void				log_actions(int id, char *msg, t_philo *philo);
 void				monitoring(t_philo *p);

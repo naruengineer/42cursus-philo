@@ -6,7 +6,7 @@
 /*   By: nando <nando@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 07:12:12 by nando             #+#    #+#             */
-/*   Updated: 2025/08/25 21:28:35 by nando            ###   ########.fr       */
+/*   Updated: 2025/08/29 12:33:22 by nando            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ static void	process_take_fork(t_philo *p, int left, int right)
 static void	process_eat_meal(t_philo *p)
 {
 	log_actions(p->id, "is eating", p);
+	pthread_mutex_lock(p->state_mtx);
 	p->last_meal_times[p->id] = now_ms();
-	usleep(p->time_to_eat * 1000);
 	p->eat_count[p->id]++;
+	pthread_mutex_unlock(p->state_mtx);
+	usleep(p->time_to_eat * 1000);
 }
 
 static void	process_put_down_fork_and_sleep(t_philo *p, int left, int right)
@@ -61,6 +63,8 @@ static void	process_put_down_fork_and_sleep(t_philo *p, int left, int right)
 	usleep(p->time_to_sleep * 1000);
 }
 
+
+
 void	*philosopher(void *arg)
 {
 	t_philo	*p;
@@ -75,12 +79,12 @@ void	*philosopher(void *arg)
 		log_actions(p->id, "is thinking", p);
 		pthread_mutex_lock(&p->forks[left]);
 		log_actions(p->id, "has taken a fork", p);
-		while (*(p->stop_flag))
+		while (is_running(p))
 			usleep(1000);
 		pthread_mutex_unlock(&p->forks[left]);
 		return (NULL);
 	}
-	while (*(p->stop_flag))
+	while (is_running(p))
 	{
 		process_think(p);
 		process_take_fork(p, left, right);

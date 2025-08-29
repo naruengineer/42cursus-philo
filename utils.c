@@ -6,7 +6,7 @@
 /*   By: nando <nando@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 07:16:06 by nando             #+#    #+#             */
-/*   Updated: 2025/08/25 21:21:39 by nando            ###   ########.fr       */
+/*   Updated: 2025/08/29 12:33:26 by nando            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,13 @@ long	now_ms(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+int is_running(t_philo *p)
+{
+	int res;
+	pthread_mutex_lock(p->state_mtx);
+	res = *(p->stop_flag);
+	pthread_mutex_unlock(p->state_mtx);
+	return res;
 }

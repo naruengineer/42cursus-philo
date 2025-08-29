@@ -6,7 +6,7 @@
 /*   By: nando <nando@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:01:39 by nando             #+#    #+#             */
-/*   Updated: 2025/08/25 21:20:58 by nando            ###   ########.fr       */
+/*   Updated: 2025/08/29 12:28:33 by nando            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,24 @@ static int	parse_args(t_ctx *c, int argc, char **argv)
 
 static int	alloc_arrays(t_ctx *c)
 {
-	c->philo = malloc(sizeof * c->philo * c->philo_count);
-	c->forks = malloc(sizeof * c->forks * c->philo_count);
-	c->threads = malloc(sizeof * c->threads * c->philo_count);
-	c->last_meal = malloc(sizeof * c->last_meal * c->philo_count);
-	c->eat_count = malloc(sizeof * c->eat_count * c->philo_count);
-	if (!c->philo || !c->forks || !c->threads || !c->last_meal || !c->eat_count)
+	c->philo = malloc(sizeof *c->philo * c->philo_count);
+	c->forks = malloc(sizeof *c->forks * c->philo_count);
+	c->threads = malloc(sizeof *c->threads * c->philo_count);
+	c->last_meal = malloc(sizeof *c->last_meal * c->philo_count);
+	c->eat_count = malloc(sizeof *c->eat_count * c->philo_count);
+	c->state_mtx = malloc(sizeof *c->state_mtx);
+	if (!c->philo || !c->forks || !c->threads || !c->last_meal || !c->eat_count
+		|| !c->state_mtx)
 	{
 		free(c->philo);
 		free(c->forks);
 		free(c->threads);
 		free(c->last_meal);
 		free(c->eat_count);
+		free(c->state_mtx);
 		return (1);
 	}
+	pthread_mutex_init(c->state_mtx, NULL);
 	return (0);
 }
 
@@ -83,6 +87,7 @@ static void	setup_philos_structs(t_ctx *c)
 		c->philo[i].last_meal_times = c->last_meal;
 		c->philo[i].stop_flag = &c->stop_flag;
 		c->philo[i].start_time = c->start_time;
+		c->philo[i].state_mtx = c->state_mtx;
 		i++;
 	}
 }
@@ -92,9 +97,7 @@ int	main(int argc, char **argv)
 	t_ctx	c;
 	int		created;
 	int		fail;
-	int		i;
 
-	i = 0;
 	if (parse_args(&c, argc, argv) || alloc_arrays(&c))
 		return (EXIT_FAILURE);
 	init_arrays(&c);
