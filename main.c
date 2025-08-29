@@ -6,7 +6,7 @@
 /*   By: nando <nando@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:01:39 by nando             #+#    #+#             */
-/*   Updated: 2025/08/29 12:28:33 by nando            ###   ########.fr       */
+/*   Updated: 2025/08/29 14:08:28 by nando            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static int	parse_args(t_ctx *c, int argc, char **argv)
 
 static int	alloc_arrays(t_ctx *c)
 {
-	c->philo = malloc(sizeof *c->philo * c->philo_count);
-	c->forks = malloc(sizeof *c->forks * c->philo_count);
-	c->threads = malloc(sizeof *c->threads * c->philo_count);
-	c->last_meal = malloc(sizeof *c->last_meal * c->philo_count);
-	c->eat_count = malloc(sizeof *c->eat_count * c->philo_count);
-	c->state_mtx = malloc(sizeof *c->state_mtx);
+	c->philo = malloc(sizeof * c->philo * c->philo_count);
+	c->forks = malloc(sizeof * c->forks * c->philo_count);
+	c->threads = malloc(sizeof * c->threads * c->philo_count);
+	c->last_meal = malloc(sizeof * c->last_meal * c->philo_count);
+	c->eat_count = malloc(sizeof * c->eat_count * c->philo_count);
+	c->state_mtx = malloc(sizeof * c->state_mtx);
 	if (!c->philo || !c->forks || !c->threads || !c->last_meal || !c->eat_count
 		|| !c->state_mtx)
 	{

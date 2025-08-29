@@ -6,7 +6,7 @@
 /*   By: nando <nando@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 07:12:12 by nando             #+#    #+#             */
-/*   Updated: 2025/08/29 12:33:22 by nando            ###   ########.fr       */
+/*   Updated: 2025/08/29 14:08:08 by nando            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ static void	process_put_down_fork_and_sleep(t_philo *p, int left, int right)
 	log_actions(p->id, "is sleeping", p);
 	usleep(p->time_to_sleep * 1000);
 }
-
-
 
 void	*philosopher(void *arg)
 {
